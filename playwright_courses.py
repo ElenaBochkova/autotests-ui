@@ -39,12 +39,12 @@ with sync_playwright() as playwright:
 
     # Проверяем наличие и текст заголовка “Courses”.
     courses_title = page.get_by_test_id('courses-list-toolbar-title-text')
-    expect(courses_title).to_be_attached()
+    expect(courses_title).to_be_visible()
     expect(courses_title).to_have_text('Courses')
 
     # Проверяем наличие и видимость иконки пустого блока.
     results_empty_section = page.get_by_test_id('courses-list-empty-view-title-text')
-    expect(results_empty_section).to_be_attached()
+    expect(results_empty_section).to_be_visible()
     expect(results_empty_section).to_have_text('There is no results')
 
     # Проверяем наличие и текст блока “There is no results”
@@ -54,6 +54,6 @@ with sync_playwright() as playwright:
 
     # Проверяем наличие и текст описания блока: Results from the load test pipeline will be displayed here”
     results_empty_text = page.get_by_test_id('courses-list-empty-view-description-text')
-    expect(results_empty_text).to_be_attached()
+    expect(results_empty_text).to_be_visible()
     expect(results_empty_text).to_have_text('Results from the load test pipeline will be displayed here')
 
