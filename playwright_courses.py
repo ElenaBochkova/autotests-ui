@@ -57,4 +57,3 @@ with sync_playwright() as playwright:
     expect(results_empty_text).to_be_attached()
     expect(results_empty_text).to_have_text('Results from the load test pipeline will be displayed here')
 
-    page.wait_for_timeout(5000)
