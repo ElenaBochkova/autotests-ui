@@ -42,12 +42,12 @@ with sync_playwright() as playwright:
     expect(courses_title).to_be_visible()
     expect(courses_title).to_have_text('Courses')
 
-    # Проверяем наличие и видимость иконки пустого блока.
+    # Проверяем наличие и текст блока “There is no results”.
     results_empty_section = page.get_by_test_id('courses-list-empty-view-title-text')
     expect(results_empty_section).to_be_visible()
     expect(results_empty_section).to_have_text('There is no results')
 
-    # Проверяем наличие и текст блока “There is no results”
+    # Проверяем наличие и видимость иконки 
     results_empty_icon = page.get_by_test_id('courses-list-empty-view-icon')
     expect(results_empty_icon).to_be_attached()
     expect(results_empty_icon).to_be_visible()
