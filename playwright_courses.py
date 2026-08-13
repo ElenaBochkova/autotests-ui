@@ -49,7 +49,6 @@ with sync_playwright() as playwright:
 
     # Проверяем наличие и видимость иконки 
     results_empty_icon = page.get_by_test_id('courses-list-empty-view-icon')
-    expect(results_empty_icon).to_be_attached()
     expect(results_empty_icon).to_be_visible()
 
     # Проверяем наличие и текст описания блока: Results from the load test pipeline will be displayed here”
