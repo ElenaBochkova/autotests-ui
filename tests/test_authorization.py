@@ -12,9 +12,11 @@ def test_wrong_email_or_password_authorization(chromium_page: Page, email: str, 
     # Теперь страница передаётся в тест через фикстуру 'chromium_page', браузер не нужно инициализировать вручную
     chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
 
+    # заполняем поле email переданным параметром
     email_input = chromium_page.get_by_test_id('login-form-email-input').locator('input')
     email_input.fill(email)
 
+    # заполняем поле password переданным параметром
     password_input = chromium_page.get_by_test_id('login-form-password-input').locator('input')
     password_input.fill(password)
 
