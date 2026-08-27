@@ -21,17 +21,15 @@ def test_create_course(create_course_page: CreateCoursePage,
     course_min_score = '10'
 
     # Проверки состояния страницы создания курса при первом открытии
-    create_course_page.check_visible_create_course_title()
-    create_course_page.check_disabled_create_course_button()
+    create_course_page.create_course_toolbar.check_visible(is_create_course_disabled=True)
     create_course_page.image_upload_widget.check_visible(is_image_uploaded=False)
-    create_course_page.check_visible_create_course_form(title='',
+    create_course_page.create_course_form.check_visible(title='',
                                                         description='',
                                                         estimated_time='',
                                                         max_score='0',
                                                         min_score='0'
                                                         )
-    create_course_page.check_visible_exercises_title()
-    create_course_page.check_visible_create_exercise_button()
+    create_course_page.create_course_exercise_toolbar.check_visible()
     create_course_page.check_visible_exercises_empty_view()
 
     # Загрузка изображения
@@ -39,13 +37,13 @@ def test_create_course(create_course_page: CreateCoursePage,
     create_course_page.image_upload_widget.check_visible(is_image_uploaded=True)
 
     # Заполнение формы курса
-    create_course_page.fill_create_course_form(title=course_title,
+    create_course_page.create_course_form.fill(title=course_title,
                                                estimated_time=course_estimated_time,
                                                description=course_description,
                                                max_score=course_max_score,
                                                min_score=course_min_score
                                                )
-    create_course_page.click_create_course_button()
+    create_course_page.create_course_toolbar.click_create_course_button()
 
     # Проверяем список курсов после создания курса
     courses_list_page.toolbar_view.check_visible()
