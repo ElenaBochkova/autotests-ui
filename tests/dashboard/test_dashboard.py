@@ -15,6 +15,9 @@ from tools.allure.tags import AllureTag
 @allure.epic(AllureEpic.LMS) # Добавили epic
 @allure.feature(AllureFeature.DASHBOARD) # Добавили feature
 @allure.story(AllureStory.DASHBOARD) # Добавили story
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.DASHBOARD)
+@allure.sub_suite(AllureStory.DASHBOARD)
 class TestDashboard:
     @allure.title("Check displaying of dashboard page")
     @allure.severity(Severity.NORMAL)
