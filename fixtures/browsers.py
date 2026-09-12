@@ -1,19 +1,29 @@
-import pytest  # Импортируем pytest
+import allure
+import pytest
+from _pytest.fixtures import SubRequest
 from playwright.sync_api import Playwright, Page
 
 from pages.authentication.registration_page import RegistrationPage
 
+
 @pytest.fixture
-def chromium_page(playwright: Playwright) -> Page:
+def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=False)
-    yield browser.new_page()
+    context = browser.new_context()
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
+    yield context.new_page()
+
+    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
     browser.close()
 
-@pytest.fixture(scope='session')  # Объявляем фикстуру
+    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
+
+
+@pytest.fixture(scope="session")
 def initialize_browser_state(playwright: Playwright):
-    # Открываем браузер и создаем новую страницу
     browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()  # Создание контекста
+    context = browser.new_context()
     page = context.new_page()
 
     registration_page = RegistrationPage(page=page)
@@ -26,9 +36,14 @@ def initialize_browser_state(playwright: Playwright):
 
 
 @pytest.fixture
-def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:
-    # Открываем браузер и создаем новую страницу с заранее созданным контекстом
+def chromium_page_with_state(initialize_browser_state, request: SubRequest, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context(storage_state="browser-state.json") # Указываем файл с сохраненным состоянием
+    context = browser.new_context(storage_state="browser-state.json")
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
     yield context.new_page()
+
+    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
     browser.close()
+
+    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
